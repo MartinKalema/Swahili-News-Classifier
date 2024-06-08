@@ -20,6 +20,8 @@ Flask-Cors
 gdown
 autopep8
 pytest
+pytest-cov
+codecov
 mypy
 dagshub
 streamlit
