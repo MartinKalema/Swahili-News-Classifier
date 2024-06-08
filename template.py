@@ -45,6 +45,8 @@ list_of_files = [
     f"src/{project_name}/entity/__init__.py",
     f"src/{project_name}/entity/entity.py",
     f"src/{project_name}/constants/__init__.py",
+    "tests/__init__.py",
+    "tests/conftest.py",
     "configuration/configuration.yaml",
     "params.yaml",
     "requirements.txt",
@@ -58,7 +60,7 @@ list_of_files = [
     "research/03_model_evaluation.ipynb",
     "templates/index.html",
     "app.py",
-    "lint.py",
+    "autopep.py",
     ".env",
     "codecov.yml"
 ]
