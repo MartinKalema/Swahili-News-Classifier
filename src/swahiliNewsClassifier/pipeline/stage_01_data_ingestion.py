@@ -17,13 +17,10 @@ class DataIngestionTrainingPipeline:
         Execute the data ingestion process.
         """
         try:
-            log.info(f"Starting {STAGE_NAME}")
             data_ingestion_config = self.config.get_data_ingestion_config()
             data_ingestion = DataIngestion(config=data_ingestion_config)
             data_ingestion.download_file()
             data_ingestion.extract_zip_file()
-            log.info(f"Completed {STAGE_NAME}\n")
-            log.info("==========================================\n")
         except Exception as e:
             log.exception(f"An error occurred during {STAGE_NAME}: {e}")
             raise e
