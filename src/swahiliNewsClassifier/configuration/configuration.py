@@ -2,8 +2,10 @@ from swahiliNewsClassifier.constants import *
 from swahiliNewsClassifier.utilities.helper_functions import read_yaml, create_directories
 from swahiliNewsClassifier.entity.entities import DataIngestionConfig
 
+
 class ConfigurationManager:
-    def __init__(self, config_filepath=CONFIG_FILE_PATH, params_filepath=PARAMS_FILE_PATH):
+    def __init__(self, config_filepath=CONFIG_FILE_PATH,
+                 params_filepath=PARAMS_FILE_PATH):
         """
         Initialize ConfigurationManager with configuration and parameter files.
 

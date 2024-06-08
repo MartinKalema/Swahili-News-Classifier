@@ -4,6 +4,7 @@ from swahiliNewsClassifier import log
 
 STAGE_NAME = "Data Ingestion Stage"
 
+
 class DataIngestionTrainingPipeline:
     def __init__(self):
         """
@@ -22,10 +23,11 @@ class DataIngestionTrainingPipeline:
             data_ingestion.download_file()
             data_ingestion.extract_zip_file()
             log.info(f"Completed {STAGE_NAME}\n")
-            log.info("**********************************")
+            log.info("==========================================\n")
         except Exception as e:
             log.exception(f"An error occurred during {STAGE_NAME}: {e}")
             raise e
+
 
 if __name__ == '__main__':
     pipeline = DataIngestionTrainingPipeline()

@@ -4,6 +4,7 @@ from swahiliNewsClassifier.pipeline.stage_01_data_ingestion import DataIngestion
 # from swahiliNewsClassifier.pipeline.stage_03_model_training import TrainingPipeline
 # from swahiliNewsClassifier.pipeline.stage_04_model_evaluation import EvaluationPipeline
 
+
 def run_pipeline_stage(stage_name, pipeline_class):
     """
     Run a pipeline stage and handle logging and exceptions.
@@ -13,15 +14,16 @@ def run_pipeline_stage(stage_name, pipeline_class):
         pipeline_class (class): The class of the pipeline stage to instantiate and run.
     """
     try:
-        log.info("*********************************\n")
+        log.info("======================================\n")
         log.info(f">>>>>> {stage_name} started <<<<<<")
         pipeline = pipeline_class()
         pipeline.main()
         log.info(f">>>>>> {stage_name} completed <<<<<<<\n")
-        log.info("**********************************\n")
+        log.info("======================================\n")
     except Exception as e:
         log.exception(f"An error occurred during {stage_name}: {e}")
         raise e
+
 
 if __name__ == '__main__':
     run_pipeline_stage("Data Ingestion Stage", DataIngestionTrainingPipeline)
