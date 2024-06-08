@@ -43,7 +43,7 @@ logging_config = {
         },
     },
     'loggers': {
-        'classifier-logger': {
+        'custom-logger': {
             'handlers': [
                 'default',
                 'file'],
@@ -53,5 +53,5 @@ logging_config = {
     },
 }
 
-classifierlogger = logging.config.dictConfig(
-    logging_config) or logging.getLogger('classifier-logger')
+customlogger = logging.config.dictConfig(
+    logging_config) or logging.getLogger('custom-logger')

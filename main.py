@@ -1,4 +1,4 @@
-from swahiliNewsClassifier import classifierlogger
+from swahiliNewsClassifier import customlogger
 from swahiliNewsClassifier.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
 # from swahiliNewsClassifier.pipeline.stage_02_prepare_base_model import PrepareBaseModelPipeline
 # from swahiliNewsClassifier.pipeline.stage_03_model_training import TrainingPipeline
@@ -13,14 +13,14 @@ def run_pipeline_stage(stage_name, pipeline_class):
         pipeline_class (class): The class of the pipeline stage to instantiate and run.
     """
     try:
-        classifierlogger.info("*********************************\n")
-        classifierlogger.info(f">>>>>> {stage_name} started <<<<<<")
+        customlogger.info("*********************************\n")
+        customlogger.info(f">>>>>> {stage_name} started <<<<<<")
         pipeline = pipeline_class()
         pipeline.main()
-        classifierlogger.info(f">>>>>> {stage_name} completed <<<<<<<\n")
-        classifierlogger.info("**********************************\n")
+        customlogger.info(f">>>>>> {stage_name} completed <<<<<<<\n")
+        customlogger.info("**********************************\n")
     except Exception as e:
-        classifierlogger.exception(f"An error occurred during {stage_name}: {e}")
+        customlogger.exception(f"An error occurred during {stage_name}: {e}")
         raise e
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ from box import ConfigBox
 from pathlib import Path
 from typing import Any, List
 from box.exceptions import BoxValueError
-from swahiliNewsClassifier import classifierlogger
+from swahiliNewsClassifier import customlogger
 
 
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
@@ -17,13 +17,13 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
             content = yaml.safe_load(yaml_file)
             if content is None:
                 raise ValueError("yaml file is empty")
-            classifierlogger.info(f"yaml file: {path_to_yaml} loaded successfully")
+            customlogger.info(f"yaml file: {path_to_yaml} loaded successfully")
             return ConfigBox(content)
     except BoxValueError as e:
-        classifierlogger.error(f"Error loading YAML file: {e}")
+        customlogger.error(f"Error loading YAML file: {e}")
         raise ValueError("yaml file is empty") from e
     except Exception as e:
-        classifierlogger.error(f"Unexpected error loading YAML file: {e}")
+        customlogger.error(f"Unexpected error loading YAML file: {e}")
         raise
 
 
@@ -32,7 +32,7 @@ def create_directories(paths: List[Path], verbose: bool = True) -> None:
     for path in paths:
         os.makedirs(path, exist_ok=True)
         if verbose:
-            classifierlogger.info(f"Created directory at: {path}")
+            customlogger.info(f"Created directory at: {path}")
 
 
 def save_json(path: Path, data: dict) -> None:
@@ -40,9 +40,9 @@ def save_json(path: Path, data: dict) -> None:
     try:
         with open(path, 'w') as json_file:
             json.dump(data, json_file)
-        classifierlogger.info(f"JSON file saved at: {path}")
+        customlogger.info(f"JSON file saved at: {path}")
     except IOError as e:
-        classifierlogger.error(f"An error occurred while writing to the file: {e}")
+        customlogger.error(f"An error occurred while writing to the file: {e}")
         raise
 
 
@@ -51,13 +51,13 @@ def load_json(path: Path) -> ConfigBox:
     try:
         with open(path, 'r') as json_file:
             content = json.load(json_file)
-            classifierlogger.info(f"JSON file loaded successfully from: {path}")
+            customlogger.info(f"JSON file loaded successfully from: {path}")
             return ConfigBox(content)
     except FileNotFoundError as e:
-        classifierlogger.error(f"File not found at: {path}")
+        customlogger.error(f"File not found at: {path}")
         raise
     except json.JSONDecodeError as e:
-        classifierlogger.error(f"Error decoding JSON file at: {path}. Reason: {e}")
+        customlogger.error(f"Error decoding JSON file at: {path}. Reason: {e}")
         raise
 
 
@@ -65,9 +65,9 @@ def save_bin(data: Any, path: Path) -> None:
     """Save file as binary."""
     try:
         joblib.dump(value=data, filename=path)
-        classifierlogger.info(f"Binary file saved at: {path}")
+        customlogger.info(f"Binary file saved at: {path}")
     except Exception as e:
-        classifierlogger.error(f"Error saving binary file at: {path}. Reason: {e}")
+        customlogger.error(f"Error saving binary file at: {path}. Reason: {e}")
         raise
 
 
@@ -78,10 +78,10 @@ def load_bin(path: Path) -> Any:
 
     try:
         data = joblib.load(path)
-        classifierlogger.info(f"Binary file loaded from: {path}")
+        customlogger.info(f"Binary file loaded from: {path}")
         return data
     except Exception as e:
-        classifierlogger.error(f"Error loading binary file from {path}. Reason: {e}")
+        customlogger.error(f"Error loading binary file from {path}. Reason: {e}")
         raise
 
 
@@ -97,9 +97,9 @@ def decode_image(image_string: str, file_name: str) -> None:
         image_data = base64.b64decode(image_string)
         with open(file_name, "wb") as f:
             f.write(image_data)
-        classifierlogger.info(f"Image saved at: {file_name}")
+        customlogger.info(f"Image saved at: {file_name}")
     except Exception as e:
-        classifierlogger.error(f"Error decoding image: {e}")
+        customlogger.error(f"Error decoding image: {e}")
         raise
 
 
@@ -110,5 +110,5 @@ def encode_image_into_base64(image_path: str) -> bytes:
             encoded_image = base64.b64encode(f.read())
         return encoded_image
     except Exception as e:
-        classifierlogger.error(f"Error encoding image at: {image_path}. Reason: {e}")
+        customlogger.error(f"Error encoding image at: {image_path}. Reason: {e}")
         raise
