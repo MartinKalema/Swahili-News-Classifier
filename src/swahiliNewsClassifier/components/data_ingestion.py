@@ -2,7 +2,7 @@ import os
 import zipfile
 import gdown
 from swahiliNewsClassifier.entity.entities import DataIngestionConfig
-from swahiliNewsClassifier import customlogger
+from swahiliNewsClassifier import log
 
 class DataIngestion:
     def __init__(self, config: DataIngestionConfig):
@@ -27,15 +27,15 @@ class DataIngestion:
         
         for url, dest in zip(dataset_urls, zip_download_dir):
             try:
-                customlogger.info(f"Downloading data from {url} into file {dest}")
+                log.info(f"Downloading data from {url} into file {dest}")
 
                 file_id = url.split("/")[-2]
                 prefix = "https://drive.google.com/uc?/export=download&id="
                 gdown.download(prefix + file_id, dest)
 
-                customlogger.info(f"Downloaded data from {url} into file {dest}")
+                log.info(f"Downloaded data from {url} into file {dest}")
             except Exception as e:
-                customlogger.error(f"Error downloading file from {url} to {dest}")
+                log.error(f"Error downloading file from {url} to {dest}")
                 raise e
 
     def extract_zip_file(self):
@@ -56,7 +56,7 @@ class DataIngestion:
                 with zipfile.ZipFile(zip_file, "r") as zip_ref:
                     zip_ref.extractall(unzip_path)
 
-                customlogger.info(f"Extracted zip file {zip_file} into: {unzip_path}")
+                log.info(f"Extracted zip file {zip_file} into: {unzip_path}")
             except Exception as e:
-                customlogger.error(f"Error extracting zip file: {zip_file}")
+                log.error(f"Error extracting zip file: {zip_file}")
                 raise e

@@ -11,7 +11,7 @@ def get_log_file_path() -> str:
     Returns:
         str: File path for the log file.
     """
-    log_dir = "logs"
+    log_dir = os.path.join(os.getcwd(), "logs")
     os.makedirs(log_dir, exist_ok=True)
     return os.path.join(
         log_dir,
@@ -53,5 +53,5 @@ logging_config = {
     },
 }
 
-customlogger = logging.config.dictConfig(
+log = logging.config.dictConfig(
     logging_config) or logging.getLogger('custom-logger')

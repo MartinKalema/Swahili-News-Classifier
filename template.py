@@ -54,7 +54,7 @@ list_of_files = [
     "main.py",
     "dvc.yaml",
     "Dockerfile",
-    "logs/example_logs.log",
+    "logs/20240608-124455.log",
     "research/01_data_ingestion.ipynb",
     "research/02_model_training.ipynb",
     "research/03_model_evaluation.ipynb",
