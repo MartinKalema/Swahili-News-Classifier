@@ -10,5 +10,5 @@ data_ingestion:
 
 training:
   root_dir: artifacts/models
-  language_model_learner_path: artifacts/models/language_model_learner.pth
-  text_classifier_learner_path: artifacts.models/text_classifier_learner.pth
+  trained_model_path: artifacts/models
+  training_data_path: artifacts/data_ingestion/decompressed/Train.csv
