@@ -1,6 +1,6 @@
 from swahiliNewsClassifier.constants import *
 from swahiliNewsClassifier.utilities.helper_functions import read_yaml, create_directories
-from swahiliNewsClassifier.entity.entities import DataIngestionConfig
+from swahiliNewsClassifier.entity.entities import DataIngestionConfig, ModelTrainingConfig
 
 
 class ConfigurationManager:
@@ -36,4 +36,33 @@ class ConfigurationManager:
             train_data_file=config.train_data_file,
             test_data_file=config.test_data_file,
             unzip_dir=config.unzip_dir
+        )
+    
+    def get_model_training_config(self) -> ModelTrainingConfig:
+        """
+        Get the model training configuration.
+
+        Returns:
+            ModelTrainingConfig: Configuration object for model training.
+        """
+        create_directories([self.config.training.root_dir])
+
+        return ModelTrainingConfig(
+            root_dir=self.config.training.root_dir,
+            training_data=self.config.training.training_data_path,
+            test_size=self.params.TEST_SIZE,
+            learning_rate_1=self.params.LEARNING_RATE_1,
+            learning_rate_2=self.params.LEARNING_RATE_2,
+            learning_rate_3=self.params.LEARNING_RATE_3,
+            learning_rate_4=self.params.LEARNING_RATE_4,
+            learning_rate_5=self.params.LEARNING_RATE_5,
+            batch_size_1=self.params.BATCH_SIZE_1,
+            batch_size_2=self.params.BATCH_SIZE_2,
+            epochs_1=self.params.EPOCHS_1,
+            epochs_2=self.params.EPOCHS_2,
+            epochs_3=self.params.EPOCHS_3,
+            epochs_4=self.params.EPOCHS_4,
+            epochs_5=self.params.EPOCHS_5,
+            number_of_classes=self.params.NUMBER_OF_CLASSES,
+
         )

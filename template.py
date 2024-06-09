@@ -43,7 +43,7 @@ list_of_files = [
     f"src/{project_name}/pipeline/stage_03_model_evaluation.py",
     f"src/{project_name}/pipeline/stage_04_prediction.py",
     f"src/{project_name}/entity/__init__.py",
-    f"src/{project_name}/entity/entity.py",
+    f"src/{project_name}/entity/entities.py",
     f"src/{project_name}/constants/__init__.py",
     "tests/__init__.py",
     "tests/conftest.py",
@@ -62,7 +62,8 @@ list_of_files = [
     "app.py",
     "autopep.py",
     ".env",
-    "codecov.yml"
+    "codecov.yml",
+    "models/model_name.pth"
 ]
 
 for filepath in list_of_files:
