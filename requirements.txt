@@ -1,5 +1,6 @@
-# torch
-# fastai
+torch
+fastai
+torchvision
 pandas 
 numpy
 scikit-learn

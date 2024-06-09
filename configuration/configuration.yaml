@@ -9,5 +9,6 @@ data_ingestion:
   unzip_dir: artifacts/data_ingestion/decompressed
 
 training:
-  root_dir: artifacts/training
-  trained_model_path: artifacts/training/model.h5
+  root_dir: artifacts/models
+  language_model_learner_path: artifacts/models/language_model_learner.pth
+  text_classifier_learner_path: artifacts.models/text_classifier_learner.pth
