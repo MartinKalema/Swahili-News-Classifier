@@ -27,4 +27,5 @@ mypy
 dagshub
 streamlit
 boto3
+python-dotenv
 -e .

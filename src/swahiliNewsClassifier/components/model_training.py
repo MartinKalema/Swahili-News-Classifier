@@ -17,7 +17,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 class ModelTraining:
     def __init__(self, model_training_config: ModelTrainingConfig):
         """
