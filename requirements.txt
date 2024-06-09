@@ -26,4 +26,5 @@ codecov
 mypy
 dagshub
 streamlit
+boto3
 -e .

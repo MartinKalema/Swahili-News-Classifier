@@ -37,7 +37,7 @@ class ConfigurationManager:
             test_data_file=config.test_data_file,
             unzip_dir=config.unzip_dir
         )
-    
+
     def get_model_training_config(self) -> ModelTrainingConfig:
         """
         Get the model training configuration.

@@ -10,6 +10,12 @@ import io
 import os
 from sklearn.model_selection import train_test_split
 from swahiliNewsClassifier import log
+import boto3
+from datetime import datetime
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 class ModelTraining:
@@ -21,6 +27,20 @@ class ModelTraining:
             model_training_config (ModelTrainingConfig): Configuration object for model training.
         """
         self.model_training_config = model_training_config
+        self.time = datetime.now().strftime("%Y%m%d-%H%M%S")
+        self.bucket_name = "swahili-news-classifier"
+        self.model_path = f"models/text_classifier_learner{self.time}.pth"
+        self.s3 = boto3.client('s3', aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'), region_name=os.getenv('REGION_NAME'))
+
+    def upload_to_s3(self) -> None:
+        """
+        Saves the trained text classifier onto an AWS S3 Bucket.
+        """
+        try:
+            self.s3.upload_file(self.model_path, self.bucket_name, self.model_path)
+            print(f"Successfully uploaded {self.model_path} to s3://{self.bucket_name}/{self.model_path}")
+        except Exception as e:
+            print(f"Failed to upload {self.model_path} to s3://{self.bucket_name}/{self.model_path}. Error: {e}")
 
     def load_data(self) -> pd.DataFrame:
         """
@@ -83,7 +103,7 @@ class ModelTraining:
 
         log.info('Saving best Language Model Learner.')
 
-        learn.save_encoder('language_model_learner')
+        learn.save_encoder(f'language_model_learner{self.time}')
 
         return learn
 
@@ -117,7 +137,7 @@ class ModelTraining:
         """
         log.info('Training Text Classifier Learner.')
         learn = text_classifier_learner(dls, AWD_LSTM, metrics=[accuracy]).to_fp16()
-        learn.load_encoder('language_model_learner')
+        learn.load_encoder(f'language_model_learner{self.time}')
         learn.lr_find()
         learn.fit_one_cycle(self.model_training_config.epochs_2, self.model_training_config.learning_rate_2)
         learn.freeze_to(-2)
@@ -129,7 +149,7 @@ class ModelTraining:
 
         log.info("Saving best Text Classifier Learner.")
 
-        learn.save_encoder('text_classifier_learner')
+        learn.save_encoder(f'text_classifier_learner{self.time}')
 
     def run_pipeline(self) -> None:
         """
@@ -141,3 +161,4 @@ class ModelTraining:
         lm_learner = self.train_language_model(dls_lm)
         dls_clf = self.create_text_classifier_dataloaders(df_trn, dls_lm)
         self.train_text_classifier(dls_clf)
+        self.upload_to_s3()

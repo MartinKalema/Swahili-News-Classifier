@@ -63,7 +63,7 @@ list_of_files = [
     "autopep.py",
     ".env",
     "codecov.yml",
-    "models/model_name.pth"
+    "models/model_name.pth",
 ]
 
 for filepath in list_of_files:

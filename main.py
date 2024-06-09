@@ -17,10 +17,12 @@ def run_pipeline_stage(stage_name, pipeline_class) -> None:
         None
     """
     try:
-        log.info(f"\033[1m>>>>>>>>>>>>>>>>>>>>> {stage_name} STARTED <<<<<<<<<<<<<<<<<<<<<\033[0m")
+        log.info(
+            f"\033[1m>>>>>>>>>>>>>>>>>>>>> {stage_name} STARTED <<<<<<<<<<<<<<<<<<<<<\033[0m")
         pipeline = pipeline_class()
         pipeline.main()
-        log.info(f"\033[1m>>>>>>>>>>>>>>>>>>> {stage_name} COMPLETED <<<<<<<<<<<<<<<<<<<\033[0m\n")
+        log.info(
+            f"\033[1m>>>>>>>>>>>>>>>>>>> {stage_name} COMPLETED <<<<<<<<<<<<<<<<<<<\033[0m\n")
     except Exception as e:
         log.exception(f"An error occurred during {stage_name}: {e}")
         raise e
@@ -28,6 +30,6 @@ def run_pipeline_stage(stage_name, pipeline_class) -> None:
 
 if __name__ == '__main__':
     run_pipeline_stage("DATA INGESTION STAGE", DataIngestionTrainingPipeline)
-    run_pipeline_stage("Model Training Stage", ModelTrainingPipeline)
+    run_pipeline_stage("MODEL TRAINING STAGE", ModelTrainingPipeline)
     # run_pipeline_stage("Model Training Stage", TrainingPipeline)
     # run_pipeline_stage("Model Evaluation Stage", EvaluationPipeline)
