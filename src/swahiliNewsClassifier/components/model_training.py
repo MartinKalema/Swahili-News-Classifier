@@ -26,9 +26,8 @@ class ModelTraining:
             model_training_config (ModelTrainingConfig): Configuration object for model training.
         """
         self.model_training_config = model_training_config
-        self.time = datetime.now().strftime("%Y%m%d-%H%M%S")
         self.bucket_name = "swahili-news-classifier"
-        self.model_path = f"models/text_classifier_learner{self.time}.pth"
+        self.model_path = f"models/text_classifier_learner.pth"
         self.s3 = boto3.client('s3', aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'), region_name=os.getenv('REGION_NAME'))
 
     def upload_to_s3(self) -> None:
@@ -102,7 +101,7 @@ class ModelTraining:
 
         log.info('Saving best Language Model Learner.')
 
-        learn.save_encoder(f'language_model_learner{self.time}')
+        learn.save_encoder(f'language_model_learner')
 
         return learn
 
@@ -136,7 +135,7 @@ class ModelTraining:
         """
         log.info('Training Text Classifier Learner.')
         learn = text_classifier_learner(dls, AWD_LSTM, metrics=[accuracy]).to_fp16()
-        learn.load_encoder(f'language_model_learner{self.time}')
+        learn.load_encoder(f'language_model_learner')
         learn.lr_find()
         learn.fit_one_cycle(self.model_training_config.epochs_2, self.model_training_config.learning_rate_2)
         learn.freeze_to(-2)
@@ -148,7 +147,7 @@ class ModelTraining:
 
         log.info("Saving best Text Classifier Learner.")
 
-        learn.save_encoder(f'text_classifier_learner{self.time}')
+        learn.save_encoder(f'text_classifier_learner')
 
     def run_pipeline(self) -> None:
         """
