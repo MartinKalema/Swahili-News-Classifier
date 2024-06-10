@@ -6,9 +6,13 @@ News contributes to education, technology, and the economic growth of a country,
 
 The objective of this hackathon is to develop a multi-class classification model to classify news content according to their specific categories specified.The model can be used by Swahili online news platforms to automatically group news according to their categories and help readers find the specific news they want to read. In addition, the model will contribute to a body of work ensuring that Swahili is represented in apps and other online products in the future.
 
-### MLPOps Pipeline/ Architecture
+### System Architecture
 
-<img src="architecture.png" />
+<img src="static/architecture.png" />
+
+### ULMFiT Model Training Pipeline
+
+<img src="static/model_training_pipeline_large.png" />
 
 ### How to install
 
