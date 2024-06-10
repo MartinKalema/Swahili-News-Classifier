@@ -9,3 +9,30 @@ The objective of this hackathon is to develop a multi-class classification model
 ### MLPOps Pipeline/ Architecture
 
 <img src="architecture.png" />
+
+### How to install
+
+Clone the repository
+
+```bash
+git clone https://github.com/MartinKalema/Swahili-News-Classifier
+```
+
+Create a conda environment after opening the repository and activate it
+
+```bash
+conda create -n classifier python=3.8 -y
+conda activate classifier
+```
+
+Install the requirements
+
+```python
+pip install -r requirements.txt
+```
+
+Initiate the pipeline
+
+```python
+python main.py
+```
