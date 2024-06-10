@@ -41,6 +41,14 @@ Create an AWS S3 Bucket and finally an environment file with the configurations 
 AWS_ACCESS_KEY_ID='...'
 AWS_SECRET_ACCESS_KEY='...'
 REGION_NAME='...eg us-east-1"
+```
+
+Connect the project to dagshub and get the experiments configuration.
+
+```
+MLFLOW_TRACKING_URI='...'
+MLFLOW_REPO_OWNER='...'
+MLFLOW_REPO_NAME='...'
 
 ```
 
