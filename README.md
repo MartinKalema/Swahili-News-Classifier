@@ -36,3 +36,11 @@ Initiate the pipeline
 ```python
 python main.py
 ```
+
+### Unit Tests
+
+To run the unit tests, run the command below.
+
+```bash
+pytest tests/test_file_name.py
+```
