@@ -6,17 +6,6 @@ codecov:
   notify:
     require_ci_to_pass: yes
     after_n_builds: 2
-    notifications:
-      - type: email
-        recipients:
-          - kalemaaaaaaaa@gmail.com
-        subject: '{{status}} - {{commit}} - {{project_name}}'
-        branch: main
-        threshold: 1%
-        when:
-          success: always
-          failure: always
-          error: always
 
 coverage:
   precision: 2
