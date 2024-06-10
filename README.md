@@ -31,6 +31,15 @@ Install the requirements
 pip install -r requirements.txt
 ```
 
+Create an AWS S3 Bucket and finally an environment file with the configurations below
+
+```
+AWS_ACCESS_KEY_ID='...'
+AWS_SECRET_ACCESS_KEY='...'
+REGION_NAME='...eg us-east-1"
+
+```
+
 Initiate the pipeline
 
 ```python
