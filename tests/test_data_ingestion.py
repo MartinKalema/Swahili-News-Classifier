@@ -20,13 +20,13 @@ def data_ingestion_config():
         test_source_URL="https://drive.google.com/file/d/1mjmYzMdnn_UwSEgTQ7i-cJ5WSOokt9Er/view?usp=sharing",
         train_data_file="artifacts/data_ingestion/compressed/train_data.zip",
         test_data_file="artifacts/data_ingestion/compressed/test_data.zip",
-        unzip_dir="artifacts/data_ingestion/decompressed",
+        decompressed_dir="artifacts/data_ingestion/decompressed",
     )
 
 
 @pytest.fixture
-def data_ingestion(data_ingestion_config):
-    return DataIngestion(config=data_ingestion_config)
+def data_ingestion(data_ingestion_configurations):
+    return DataIngestion(data_ingestion_configurations=data_ingestion_configurations)
 
 
 @patch('swahiliNewsClassifier.components.data_ingestion.os.makedirs')
