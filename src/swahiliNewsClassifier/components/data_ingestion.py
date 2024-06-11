@@ -6,14 +6,14 @@ from swahiliNewsClassifier import log
 
 
 class DataIngestion:
-    def __init__(self, config: DataIngestionConfig):
+    def __init__(self, data_ingestion_config: DataIngestionConfig):
         """
         Initialize DataIngestion object with the provided configuration.
 
         Args:
-            config (DataIngestionConfig): Configuration object for data ingestion.
+            data_ingestion_config (DataIngestionConfig): Configuration object for data ingestion.
         """
-        self.config = config
+        self.data_ingestion_config = data_ingestion_config
 
     def download_file(self):
         """Fetch data from a URL.
@@ -24,11 +24,11 @@ class DataIngestion:
         os.makedirs("artifacts/data_ingestion/compressed", exist_ok=True)
         os.makedirs("artifacts/data_ingestion/decompressed", exist_ok=True)
         dataset_urls = [
-            self.config.train_source_URL,
-            self.config.test_source_URL]
+            self.data_ingestion_config.train_source_URL,
+            self.data_ingestion_config.test_source_URL]
         zip_download_dir = [
-            self.config.train_data_file,
-            self.config.test_data_file]
+            self.data_ingestion_config.train_data_file,
+            self.data_ingestion_config.test_data_file]
 
         for url, dest in zip(dataset_urls, zip_download_dir):
             try:
@@ -53,9 +53,9 @@ class DataIngestion:
             Exception: If an error occurs during the extraction process.
         """
         zip_download_dir = [
-            self.config.train_data_file,
-            self.config.test_data_file]
-        unzip_path = self.config.unzip_dir
+            self.data_ingestion_config.train_data_file,
+            self.data_ingestion_config.test_data_file]
+        unzip_path = self.data_ingestion_config.decompressed_dir
         os.makedirs(unzip_path, exist_ok=True)
 
         for zip_file in zip_download_dir:

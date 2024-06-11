@@ -28,17 +28,17 @@ class ConfigurationManager:
         Returns:
             DataIngestionConfig: Configuration object for data ingestion.
         """
-        config = self.config.data_ingestion
+        data_ingestion_config = self.config.data_ingestion
 
-        create_directories([config.root_dir])
+        create_directories([data_ingestion_config.root_dir])
 
         return DataIngestionConfig(
-            root_dir=config.root_dir,
-            train_source_URL=config.train_source_URL,
-            test_source_URL=config.test_source_URL,
-            train_data_file=config.train_data_file,
-            test_data_file=config.test_data_file,
-            unzip_dir=config.unzip_dir
+            root_dir=data_ingestion_config.root_dir,
+            train_source_URL=data_ingestion_config.train_source_URL,
+            test_source_URL=data_ingestion_config.test_source_URL,
+            train_data_file=data_ingestion_config.train_data_file,
+            test_data_file=data_ingestion_config.test_data_file,
+            decompressed_dir=data_ingestion_config.decompressed_dir
         )
 
     def get_model_training_and_evaluation_config(self) -> ModelTrainingAndEvaluationConfig:
