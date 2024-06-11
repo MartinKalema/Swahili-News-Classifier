@@ -11,7 +11,6 @@ import os
 from sklearn.model_selection import train_test_split
 from swahiliNewsClassifier import log
 import boto3
-from datetime import datetime
 from dotenv import load_dotenv
 
 
@@ -141,7 +140,7 @@ class ModelTraining:
         learn.freeze_to(-2)
         learn.fit_one_cycle(self.model_training_config.epochs_3, slice(1e-3/(2.6**4), self.model_training_config.learning_rate_3))
         learn.freeze_to(-3)
-        learn.fit_one_cycle(self.model_training_config.epochs_4, slice(1e-3/(2.6**4), self.model_training_config.learning_rate_4))
+        learn.fit_one_cycle(self.model_training_config.epochs_4, slice(5e-3/(2.6**4), self.model_training_config.learning_rate_4))
         learn.unfreeze()
         learn.fit_one_cycle(self.model_training_config.epochs_5, slice(1e-3/(2.6**4), self.model_training_config.learning_rate_5))
 
