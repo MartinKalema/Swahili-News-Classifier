@@ -1,10 +1,12 @@
 import streamlit as st
 from fastai.text.all import *
 
+
 @st.cache_resource
 def load_model():
     learn = load_learner('text_classifier_learner.pth')
     return learn
+
 
 learn = load_model()
 

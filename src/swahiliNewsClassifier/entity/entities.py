@@ -32,39 +32,39 @@ class ModelTrainingAndEvaluationConfig:
         test_size (float): Proportion of the dataset to include in the test split. This parameter is used to split the dataset into training and validation sets.
 
         learning_rate_1 (float): Learning rate for training the language model learner. This is used during the fine-tuning of the pre-trained language model.
-        
+
         learning_rate_2 (float): Learning rate for the first phase of classifier training. This is used in the initial phase of training the text classifier.
-        
+
         learning_rate_3 (float): Learning rate for the second phase of classifier training. This is used in the second phase of training the text classifier.
-        
+
         learning_rate_4 (float): Learning rate for the third phase of classifier training. This is used in the third phase of training the text classifier.
-        
+
         learning_rate_5 (float): Learning rate for the fourth phase of classifier training. This is used in the final phase of training the text classifier.
-        
+
         batch_size_1 (int): Batch size for language model training. This parameter defines the number of samples that will be propagated through the network at once during language model training.
-        
+
         batch_size_2 (int): Batch size for text classifier training. This parameter defines the number of samples that will be propagated through the network at once during text classifier training.
-        
+
         epochs_1 (int): Number of epochs for training the language model learner. This defines the number of complete passes through the training dataset.
-        
+
         epochs_2 (int): Number of epochs for the first phase of classifier training. This defines the number of complete passes through the training dataset in the first phase.
-        
+
         epochs_3 (int): Number of epochs for the second phase of classifier training. This defines the number of complete passes through the training dataset in the second phase.
-        
+
         epochs_4 (int): Number of epochs for the third phase of classifier training. This defines the number of complete passes through the training dataset in the third phase.
-        
+
         epochs_5 (int): Number of epochs for the fourth phase of classifier training. This defines the number of complete passes through the training dataset in the final phase.
-        
+
         training_data (Path): Path to the training data CSV file. This file contains the text data and corresponding labels for training and validation.
 
         root_dir (Path): Root directory for storing model artifacts. This directory is used to save trained models, logs, and other artifacts.
-        
+
         mlflow_tracking_uri (str): URI for the MLflow tracking server. This is used to log and track experiments with MLflow.
-        
+
         mlflow_repo_name (str): Repository name for MLflow tracking. This is used to organize and identify different MLflow runs within the repository.
-        
+
         mlflow_repo_owner (str): Owner of the MLflow repository. This is used to identify the owner of the MLflow repository.
-        
+
         all_params (dict): Dictionary containing all parameters used for model training. This includes all hyperparameters and other settings for reproducibility and logging.
     """
     test_size: float

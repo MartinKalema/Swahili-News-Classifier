@@ -6,6 +6,7 @@ import os
 
 load_dotenv()
 
+
 class ConfigurationManager:
     def __init__(self, config_filepath=CONFIG_FILE_PATH,
                  params_filepath=PARAMS_FILE_PATH):
@@ -41,7 +42,8 @@ class ConfigurationManager:
             decompressed_dir=data_ingestion_config.decompressed_dir
         )
 
-    def get_model_training_and_evaluation_config(self) -> ModelTrainingAndEvaluationConfig:
+    def get_model_training_and_evaluation_config(
+            self) -> ModelTrainingAndEvaluationConfig:
         """
         Get the model training and evaluation configuration.
 

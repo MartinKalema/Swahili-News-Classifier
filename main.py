@@ -28,4 +28,6 @@ def run_pipeline_stage(stage_name, pipeline_class) -> None:
 
 if __name__ == '__main__':
     run_pipeline_stage("DATA INGESTION STAGE", DataIngestionTrainingPipeline)
-    run_pipeline_stage("MODEL TRAINING AND EVALUATION STAGE", ModelTrainingAndEvaluationPipeline)
+    run_pipeline_stage(
+        "MODEL TRAINING AND EVALUATION STAGE",
+        ModelTrainingAndEvaluationPipeline)

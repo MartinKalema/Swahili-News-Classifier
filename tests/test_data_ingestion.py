@@ -26,7 +26,8 @@ def data_ingestion_configurations():
 
 @pytest.fixture
 def data_ingestion(data_ingestion_configurations):
-    return DataIngestion(data_ingestion_configurations=data_ingestion_configurations)
+    return DataIngestion(
+        data_ingestion_configurations=data_ingestion_configurations)
 
 
 @patch('swahiliNewsClassifier.components.data_ingestion.os.makedirs')

@@ -63,7 +63,8 @@ class DataIngestion:
                 with zipfile.ZipFile(zip_file, "r") as zip_ref:
                     zip_ref.extractall(decompress_path)
 
-                log.info(f"Extracted zip file {zip_file} into: {decompress_path}")
+                log.info(
+                    f"Extracted zip file {zip_file} into: {decompress_path}")
             except Exception as e:
                 log.error(f"Error extracting zip file: {zip_file}")
                 raise e
