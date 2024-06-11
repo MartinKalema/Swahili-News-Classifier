@@ -1,8 +1,6 @@
 from swahiliNewsClassifier import log
 from swahiliNewsClassifier.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
-from swahiliNewsClassifier.pipeline.stage_02_model_training import ModelTrainingPipeline
-# from swahiliNewsClassifier.pipeline.stage_03_model_training import TrainingPipeline
-# from swahiliNewsClassifier.pipeline.stage_04_model_evaluation import EvaluationPipeline
+from swahiliNewsClassifier.pipeline.stage_02_model_training_and_evaluation import ModelTrainingAndEvaluationPipeline
 
 
 def run_pipeline_stage(stage_name, pipeline_class) -> None:
@@ -30,6 +28,4 @@ def run_pipeline_stage(stage_name, pipeline_class) -> None:
 
 if __name__ == '__main__':
     run_pipeline_stage("DATA INGESTION STAGE", DataIngestionTrainingPipeline)
-    run_pipeline_stage("MODEL TRAINING STAGE", ModelTrainingPipeline)
-    # run_pipeline_stage("Model Training Stage", TrainingPipeline)
-    # run_pipeline_stage("Model Evaluation Stage", EvaluationPipeline)
+    run_pipeline_stage("MODEL TRAINING AND EVALUATION STAGE", ModelTrainingAndEvaluationPipeline)

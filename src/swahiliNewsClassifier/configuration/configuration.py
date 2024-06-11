@@ -1,7 +1,10 @@
 from swahiliNewsClassifier.constants import *
 from swahiliNewsClassifier.utilities.helper_functions import read_yaml, create_directories
-from swahiliNewsClassifier.entity.entities import DataIngestionConfig, ModelTrainingConfig
+from swahiliNewsClassifier.entity.entities import DataIngestionConfig, ModelTrainingAndEvaluationConfig
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 class ConfigurationManager:
     def __init__(self, config_filepath=CONFIG_FILE_PATH,
@@ -38,16 +41,16 @@ class ConfigurationManager:
             unzip_dir=config.unzip_dir
         )
 
-    def get_model_training_config(self) -> ModelTrainingConfig:
+    def get_model_training_and_evaluation_config(self) -> ModelTrainingAndEvaluationConfig:
         """
-        Get the model training configuration.
+        Get the model training and evaluation configuration.
 
         Returns:
-            ModelTrainingConfig: Configuration object for model training.
+            ModelTrainingConfig: Configuration object for model training and evaluation.
         """
         create_directories([self.config.training.root_dir])
 
-        return ModelTrainingConfig(
+        return ModelTrainingAndEvaluationConfig(
             root_dir=self.config.training.root_dir,
             training_data=self.config.training.training_data_path,
             test_size=self.params.TEST_SIZE,
@@ -63,6 +66,9 @@ class ConfigurationManager:
             epochs_3=self.params.EPOCHS_3,
             epochs_4=self.params.EPOCHS_4,
             epochs_5=self.params.EPOCHS_5,
-            number_of_classes=self.params.NUMBER_OF_CLASSES,
+            mlflow_repo_name=os.getenv('MLFLOW_REPO_NAME'),
+            mlflow_tracking_uri=os.getenv('MLFLOW_TRACKING_URI'),
+            mlflow_repo_owner=os.getenv('MLFLOW_REPO_OWNER'),
+            all_params=self.params,
 
         )
