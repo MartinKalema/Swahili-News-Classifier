@@ -6,14 +6,14 @@ from swahiliNewsClassifier import log
 
 
 class DataIngestion:
-    def __init__(self, data_ingestion_config: DataIngestionConfig):
+    def __init__(self, data_ingestion_configurations: DataIngestionConfig):
         """
         Initialize DataIngestion object with the provided configuration.
 
         Args:
-            data_ingestion_config (DataIngestionConfig): Configuration object for data ingestion.
+            data_ingestion_configurations (DataIngestionConfig): Configuration object for data ingestion.
         """
-        self.data_ingestion_config = data_ingestion_config
+        self.data_ingestion_configurations = data_ingestion_configurations
 
     def download_file(self):
         """Fetch data from a URL.
@@ -24,11 +24,11 @@ class DataIngestion:
         os.makedirs("artifacts/data_ingestion/compressed", exist_ok=True)
         os.makedirs("artifacts/data_ingestion/decompressed", exist_ok=True)
         dataset_urls = [
-            self.data_ingestion_config.train_source_URL,
-            self.data_ingestion_config.test_source_URL]
+            self.data_ingestion_configurations.train_source_URL,
+            self.data_ingestion_configurations.test_source_URL]
         zip_download_dir = [
-            self.data_ingestion_config.train_data_file,
-            self.data_ingestion_config.test_data_file]
+            self.data_ingestion_configurations.train_data_file,
+            self.data_ingestion_configurations.test_data_file]
 
         for url, dest in zip(dataset_urls, zip_download_dir):
             try:
@@ -53,17 +53,17 @@ class DataIngestion:
             Exception: If an error occurs during the extraction process.
         """
         zip_download_dir = [
-            self.data_ingestion_config.train_data_file,
-            self.data_ingestion_config.test_data_file]
-        unzip_path = self.data_ingestion_config.decompressed_dir
-        os.makedirs(unzip_path, exist_ok=True)
+            self.data_ingestion_configurations.train_data_file,
+            self.data_ingestion_configurations.test_data_file]
+        decompress_path = self.data_ingestion_configurations.decompressed_dir
+        os.makedirs(decompress_path, exist_ok=True)
 
         for zip_file in zip_download_dir:
             try:
                 with zipfile.ZipFile(zip_file, "r") as zip_ref:
-                    zip_ref.extractall(unzip_path)
+                    zip_ref.extractall(decompress_path)
 
-                log.info(f"Extracted zip file {zip_file} into: {unzip_path}")
+                log.info(f"Extracted zip file {zip_file} into: {decompress_path}")
             except Exception as e:
                 log.error(f"Error extracting zip file: {zip_file}")
                 raise e

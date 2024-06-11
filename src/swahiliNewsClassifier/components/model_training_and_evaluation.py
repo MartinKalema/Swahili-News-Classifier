@@ -18,14 +18,14 @@ import mlflow
 load_dotenv()
 
 class ModelTrainingAndEvaluation:
-    def __init__(self, model_training_and_evaluation_config: ModelTrainingAndEvaluationConfig):
+    def __init__(self, model_training_and_evaluation_configurations: ModelTrainingAndEvaluationConfig):
         """
         Initialize ModelTraining object with the provided configuration.
 
         Args:
-            model_training_and_evaluation_config (ModelTrainingConfig): Configuration object for model training.
+            model_training_and_evaluation_configurations (ModelTrainingConfig): Configuration object for model training.
         """
-        self.model_training_and_evaluation_config = model_training_and_evaluation_config
+        self.model_training_and_evaluation_configurations = model_training_and_evaluation_configurations
         self.bucket_name = "swahili-news-classifier"
         self.model_path = f"models/text_classifier_learner.pth"
         self.s3 = boto3.client('s3', aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'), region_name=os.getenv('REGION_NAME'))
@@ -48,7 +48,7 @@ class ModelTrainingAndEvaluation:
             pd.DataFrame: Loaded training data.
         """
         log.info('Loading training data')
-        train = pd.read_csv(self.model_training_and_evaluation_config.training_data)
+        train = pd.read_csv(self.model_training_and_evaluation_configurations.training_data)
         return train
 
     def prepare_data(self, train) -> 'tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]':
@@ -61,7 +61,7 @@ class ModelTrainingAndEvaluation:
         Returns:
             tuple: A tuple containing training data (df_trn), validation data (df_val), and data for language model (df_lm).
         """
-        df_trn, df_val = train_test_split(train, stratify=train['category'], test_size=self.model_training_and_evaluation_config.test_size, random_state=123)
+        df_trn, df_val = train_test_split(train, stratify=train['category'], test_size=self.model_training_and_evaluation_configurations.test_size, random_state=123)
         df_lm = pd.concat([df_trn, df_val], axis=0)[['content']]
         return df_trn, df_val, df_lm
 
@@ -81,7 +81,7 @@ class ModelTrainingAndEvaluation:
             get_x=ColReader('text'),
             splitter=RandomSplitter(0.1))
 
-        dls = dblock.dataloaders(df_lm, bs=self.model_training_and_evaluation_config.batch_size_1)
+        dls = dblock.dataloaders(df_lm, bs=self.model_training_and_evaluation_configurations.batch_size_1)
         return dls
 
     def train_language_model(self, dls) -> Learner:
@@ -97,7 +97,7 @@ class ModelTrainingAndEvaluation:
         log.info('Training Language Model Learner')
         learn = language_model_learner(dls, AWD_LSTM, drop_mult=0.3, metrics=[accuracy]).to_fp16()
         learn.lr_find()
-        learn.fine_tune(self.model_training_and_evaluation_config.epochs_1, self.model_training_and_evaluation_config.learning_rate_1)
+        learn.fine_tune(self.model_training_and_evaluation_configurations.epochs_1, self.model_training_and_evaluation_configurations.learning_rate_1)
 
         log.info('Saving best Language Model Learner.')
 
@@ -124,15 +124,15 @@ class ModelTrainingAndEvaluation:
             get_y=ColReader('category'),
             splitter=RandomSplitter(0.2))
         
-        return dblock.dataloaders(df_trn, bs=self.model_training_and_evaluation_config.batch_size_2)
+        return dblock.dataloaders(df_trn, bs=self.model_training_and_evaluation_configurations.batch_size_2)
     
     def log_to_mlflow(self, metrics: list) -> None:
-        os.environ['MLFLOW_TRACKING_URI'] = self.model_training_and_evaluation_config.mlflow_tracking_uri
+        os.environ['MLFLOW_TRACKING_URI'] = self.model_training_and_evaluation_configurations.mlflow_tracking_uri
 
-        dagshub.init(repo_owner=self.model_training_and_evaluation_config.mlflow_repo_owner, repo_name=self.model_training_and_evaluation_config.mlflow_repo_name, mlflow=True)
+        dagshub.init(repo_owner=self.model_training_and_evaluation_configurations.mlflow_repo_owner, repo_name=self.model_training_and_evaluation_configurations.mlflow_repo_name, mlflow=True)
 
         with mlflow.start_run():
-            mlflow.log_params(self.model_training_and_evaluation_config.all_params)
+            mlflow.log_params(self.model_training_and_evaluation_configurations.all_params)
             mlflow.log_metric('val_loss', metrics[0])
             mlflow.log_metric('val_accuracy', metrics[1])
 
@@ -149,13 +149,13 @@ class ModelTrainingAndEvaluation:
         learn = text_classifier_learner(dls, AWD_LSTM, metrics=[accuracy]).to_fp16()
         learn.load_encoder(f'language_model_learner')
         learn.lr_find()
-        learn.fit_one_cycle(self.model_training_and_evaluation_config.epochs_2, self.model_training_and_evaluation_config.learning_rate_2)
+        learn.fit_one_cycle(self.model_training_and_evaluation_configurations.epochs_2, self.model_training_and_evaluation_configurations.learning_rate_2)
         learn.freeze_to(-2)
-        learn.fit_one_cycle(self.model_training_and_evaluation_config.epochs_3, slice(1e-3/(2.6**4), self.model_training_and_evaluation_config.learning_rate_3))
+        learn.fit_one_cycle(self.model_training_and_evaluation_configurations.epochs_3, slice(1e-3/(2.6**4), self.model_training_and_evaluation_configurations.learning_rate_3))
         learn.freeze_to(-3)
-        learn.fit_one_cycle(self.model_training_and_evaluation_config.epochs_4, slice(5e-3/(2.6**4), self.model_training_and_evaluation_config.learning_rate_4))
+        learn.fit_one_cycle(self.model_training_and_evaluation_configurations.epochs_4, slice(5e-3/(2.6**4), self.model_training_and_evaluation_configurations.learning_rate_4))
         learn.unfreeze()
-        learn.fit_one_cycle(self.model_training_and_evaluation_config.epochs_5, slice(1e-3/(2.6**4), self.model_training_and_evaluation_config.learning_rate_5))
+        learn.fit_one_cycle(self.model_training_and_evaluation_configurations.epochs_5, slice(1e-3/(2.6**4), self.model_training_and_evaluation_configurations.learning_rate_5))
         classifier_metrics = learn.validate()
         self.log_to_mlflow(classifier_metrics)
         learn.save_encoder(f'text_classifier_learner')
