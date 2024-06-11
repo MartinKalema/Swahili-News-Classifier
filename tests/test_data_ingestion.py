@@ -13,7 +13,7 @@ sys.path.insert(
 
 
 @pytest.fixture
-def data_ingestion_config():
+def data_ingestion_configurations():
     return DataIngestionConfig(
         root_dir="artifacts/data_ingestion",
         train_source_URL="https://drive.google.com/file/d/15stuLDZkXNOgBUC1rnx5yXYdVPViUjNB/view?usp=sharing",
