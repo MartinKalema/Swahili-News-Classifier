@@ -27,7 +27,7 @@ class ModelTrainingAndEvaluation:
         """
         self.model_training_and_evaluation_configurations = model_training_and_evaluation_configurations
         self.bucket_name = "swahili-news-classifier"
-        self.model_path = f"models/text_classifier_learner.pth"
+        self.model_path = f"models/text_classifier_learner.pkl"
         self.s3 = boto3.client('s3', aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'), aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'), region_name=os.getenv('REGION_NAME'))
 
     def upload_to_s3(self) -> None:
@@ -158,7 +158,7 @@ class ModelTrainingAndEvaluation:
         learn.fit_one_cycle(self.model_training_and_evaluation_configurations.epochs_5, slice(1e-3/(2.6**4), self.model_training_and_evaluation_configurations.learning_rate_5))
         classifier_metrics = learn.validate()
         self.log_to_mlflow(classifier_metrics)
-        learn.save_encoder(f'text_classifier_learner')
+        learn.export('models/text_classifier_learner.pkl')
 
 
 

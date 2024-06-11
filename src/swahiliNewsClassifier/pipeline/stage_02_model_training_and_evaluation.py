@@ -19,7 +19,7 @@ class ModelTrainingAndEvaluationPipeline:
         try:
             model_training_and_evaluation_config = self.config.get_model_training_and_evaluation_config()
             model_training_and_evaluation = ModelTrainingAndEvaluation(
-                model_training_and_evaluation_config=model_training_and_evaluation_config)
+                model_training_and_evaluation_configurations=model_training_and_evaluation_config)
             model_training_and_evaluation.run_pipeline()
         except Exception as e:
             log.exception(f"An error occurred during {STAGE_NAME}: {e}")
