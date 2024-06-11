@@ -11,9 +11,13 @@ import time
 
 # learn = load_model()
 
-classes = ["Kimataifa"]
+classes = ["Kitaifa", "Biashara", "Kimataifa"]
 
 st.title('ULMFiT Swahili News Article Classifier')
+
+st.markdown("""
+ULMFiT (Universal Language Model Fine-tuning) is an effective transfer learning method for NLP tasks.
+""")
 
 def run_spinner():
     with st.spinner('Model is being loaded . . .'):
