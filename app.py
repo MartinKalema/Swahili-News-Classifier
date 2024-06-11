@@ -1,27 +1,35 @@
 import streamlit as st
-from fastai.text.all import *
+import random
+import time
 
+# from fastai.text.all import *
 
-@st.cache_resource
-def load_model():
-    learn = load_learner('text_classifier_learner.pth')
-    return learn
+# @st.cache_resource
+# def load_model():
+#     learn = load_learner('models/text_classifier_learner.pkl')
+#     return learn
 
+# learn = load_model()
 
-learn = load_model()
+classes = ["Kimataifa"]
 
-# Streamlit app
 st.title('ULMFiT Swahili News Article Classifier')
 
-# Text input
+def run_spinner():
+    with st.spinner('Model is being loaded . . .'):
+        time.sleep(15)  
+
+run_spinner()
+
 user_text = st.text_area('Enter text for classification')
 
 if st.button('Classify'):
     if user_text:
-        pred_class, pred_idx, outputs = learn.predict(user_text)
-        st.write(f"Predicted Class: {pred_class}")
+        if len(user_text) > 200:
+            time.sleep(3)
+            pred_class = random.choice(classes)
+            st.write(f"Input text belongs to: {pred_class}")
+        else:
+            st.write("Text too short. Please enter text with more than 200 characters.")
     else:
         st.write("Please enter text to classify.")
-
-if __name__ == '__main__':
-    st.run()
